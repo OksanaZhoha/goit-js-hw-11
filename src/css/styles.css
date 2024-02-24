@@ -40,14 +40,13 @@ body {
 
 img {
   display: block;
-  width: 270px;
-  height: 150px;
+  width: 360px;
+  height: 152px;
   object-fit: cover;
 }
 
 .section {
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding: 0;
 }
 
 .container {
@@ -76,11 +75,10 @@ img {
 }
 
 .photo-card {
-  width: 270px;
-  height: 198px;
+  width: 360px;
+  height: 200px;
   border: 1px solid #808080;
-  margin-top: 30px;
-  margin-left: 30px;
+  
 }
 
 .search_form {
