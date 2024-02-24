@@ -23,91 +23,120 @@
   -webkit-text-size-adjust: 100%;
 }
 
-.form {
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: #ffffff;
+}
+
+img {
+  display: block;
+  width: 270px;
+  height: 150px;
+  object-fit: cover;
+}
+
+.section {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.container {
+  padding-left: 15px;
+  padding-right: 15px;
+  margin: 0 auto;
+  width: 1200px;
+}
+
+.header {
+  background-color: #ffffff;
   display: flex;
-  padding: 32px;
-  gap: 16px;
-}
-
-#search-form {
-  width: 272px;
-  height: 40px;
-  flex-shrink: 0;
-  border-radius: 8px;
-  border: 1px solid #808080;
-  color: #2e2f42;
-  font-family: Montserrat;
-  line-height: 1.5;
-  letter-spacing: 0.04em;
-  padding: 8px 16px;
-  outline-color: transparent;
-  outline-offset: 4px;
-}
-
-#search-form input {
-  border: none
-}
-
-#search-form:hover {
-  border: 1px solid #000000;
-}
-
-#search-form:active {
-  border: 1px solid #808080;
-}
-
-#search-form::placeholder {
-  font-size: 16px;
-  font-family: Montserrat;
-  font-weight: 400;
-  line-height: 1.5;
-  letter-spacing: 0.04em;
-}
-
-.search-form button {
-  display: flex;
-  width: 90px;
-  height: 40px;
-  padding: 8px 16px;
   justify-content: center;
   align-items: center;
-  gap: 10px;
-  border: 0;
-  border-radius: 8px;
-  background: #4e75ff;
-  color: #ffffff;
-  font-family: Montserrat;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 1.5;
-  letter-spacing: 0.04em;
-}
-
-.search-form button:hover {
-  background: #6c8cff;
-}
-
-ol,
-ul {
-  list-style: none;
+  padding: 20px 0;
 }
 
 .gallery {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
-  padding: 0;
-  margin-left: auto;
-  margin-right: auto;
-  gap: 24px;
-  row-gap: 24px;
 }
 
-.gallery-image {
-  width: 360px;
-  height: 200px;
-}
-
-.gallery-link {
+.lightbox {
+  color: #2E2F42;
   text-decoration: none;
+}
+
+.photo-card {
+  width: 270px;
+  height: 198px;
+  border: 1px solid #808080;
+  margin-top: 30px;
+  margin-left: 30px;
+}
+
+.search_form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #808080;
+}
+
+.search_form:hover {
+  border: #000000;
+}
+
+.search-form-input {
+  max-width: 272px;
+  height: 40px;
+  padding: 8px 16px 8px 16px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  border: 1px solid #808080;
+  border-radius: 4px;
+  margin-right: 8px;
+  background-color: #ffffff;
+  color: #2E2F42;
+}
+
+.search-form button {
+  width: 91px;
+  height: 40px;
+  padding: 8px 16px 8px 16px;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  background-color: #4E75FF;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.search-form button:hover {
+  background-color: #6C8CFF;
+}
+
+.info {
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  font-size: 12px;
 }
