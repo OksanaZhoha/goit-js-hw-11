@@ -1,59 +1,36 @@
-import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import SimpleLightbox from 'simplelightbox';
-import 'simplelightbox/dist/simple-lightbox.min.css';
-import { options } from './pixabay-api.js';
+import iziToast from 'izitoast';
+import 'izitoast/dist/css/iziToast.min.css';
 
-const lightbox = new SimpleLightbox('.lightbox', {
-  captionsData: 'alt',
-  captionDelay: 250,
-});
-
-export function renderGallery(hits, totalHits) {
-  const galleryEl = document.querySelector('.gallery');
-  const markup = hits
-    .map(
-      ({
-        webformatURL,
-        largeImageURL,
-        tags,
-        likes,
-        views,
-        comments,
-        downloads,
-      }) => {
-        return `
-              <a href="${largeImageURL}" class="lightbox">
-                  <div class="photo-card">
-                      <img src="${webformatURL}" alt="${tags}" loading="lazy" />
-                      <div class="info">
-                          <p class="info-item">
-                              <b>Likes</b>
-                              ${likes}
-                          </p>
-                          <p class="info-item">
-                              <b>Views</b>
-                              ${views}
-                          </p>
-                          <p class="info-item">
-                              <b>Comments</b>
-                              ${comments}
-                          </p>
-                          <p class="info-item">
-                              <b>Downloads</b>
-                              ${downloads}
-                          </p>
-                      </div>
-                  </div>
-              </a>
-              `;
-      }
-    )
-    .join('');
-
-  galleryEl.insertAdjacentHTML('beforeend', markup);
-
-  if (options.params.page * options.params.per_page >= totalHits) {
-    Notify.info("We're sorry, but you've reached the end of search results.");
+export function getHtmlImageList(iamgesList) {
+  if (iamgesList.length <= 0) {
+    iziToast.error({
+      message:
+        'Sorry, there are no images matching your search query. Please try again!',
+      progressBar: false,
+      transitionIn: 'fadeIn',
+      position: 'topRight',
+    });
+    return 'no images found';
+  } else {
+    const htmlImagesList = iamgesList
+      .map(
+        image =>
+          `<li class="gallery-item">
+            <a class="gallery-link" href="${image.largeImageURL}">
+              <img src="${image.webformatURL}" alt="${image.tags}" width="360" height="200">
+            </a>
+            <ul class="gallery-item-desc">
+              <li class="gallery-item-desc-item"><span class="gallery-item-desc-cap">Likes</span><span>${image.likes}</span></li>
+              <li class="gallery-item-desc-item"><span class="gallery-item-desc-cap">Views</span><span>${image.views}</span></li>
+              <li class="gallery-item-desc-item"><span class="gallery-item-desc-cap">Comments</span><span>${image.comments}</span></li>
+              <li class="gallery-item-desc-item"><span class="gallery-item-desc-cap">Downloads</span><span>${image.downloads}</span></li>
+            </ul>
+          </li>`
+      )
+      .join('');
+    return htmlImagesList;
   }
-  lightbox.refresh();
+}
+export function renderGallery(htmlImageList, galleryList) {
+  galleryList.innerHTML = `${htmlImageList}`;
 }

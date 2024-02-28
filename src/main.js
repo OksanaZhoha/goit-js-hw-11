@@ -1,62 +1,59 @@
-import axios from 'axios';
-import { Notify } from 'notiflix/build/notiflix-notify-aio';
-import { BASE_URL, options } from './pixabay-api.js';
-import { renderGallery } from './render-functions.js';
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 
-const searchInputEl = document.querySelector('input[name="searchQuery"');
-const searchFormEl = document.getElementById('search-form');
+import pixabayApi from './js/pixabay-api';
+import { renderGallery, getHtmlImageList } from './js/render-functions';
+import iziToast from 'izitoast';
+import 'izitoast/dist/css/iziToast.min.css';
 
-let totalHits = 0;
+const galleryList = document.querySelector('.gallery-list');
+const queryToSearch = document.querySelector('.search-form-input');
+const submitQuery = document.querySelector('.search-form');
+const loader = document.querySelector('.loader');
+const API_KEY = '42494915-f1925227b1d4f602df08c38a4';
 
-async function handleSubmit(e) {
+const pixabay = new pixabayApi(API_KEY);
+const gallery = new SimpleLightbox('.gallery-list a', {
+  captionDelay: 250,
+  captionsData: 'alt',
+});
+
+submitQuery.addEventListener('submit', e => {
   e.preventDefault();
-  options.params.q = searchInputEl.value.trim();
-  if (options.params.q === '') {
-    return;
+  galleryList.innerHTML = '';
+  const query = queryToSearch.value;
+  if (isValidQuery(query)) {
+    isLoaderVisible(loader, true);
+    pixabay
+      .getImageList(query)
+      .then(imagesList => getHtmlImageList(imagesList.hits))
+      .then(htmlImageList => renderGallery(htmlImageList, galleryList))
+      .then(() => {
+        isLoaderVisible(loader, false);
+        gallery.refresh();
+      });
+  } else {
+    iziToast.error({
+      message: 'Search field is empty',
+      progressBar: false,
+      transitionIn: 'fadeIn',
+      position: 'topRight',
+    });
   }
-  options.params.page = 1;
-  const galleryEl = document.querySelector('.gallery');
-  galleryEl.innerHTML = '';
+});
 
-  try {
-    const response = await axios.get(BASE_URL, options);
-    totalHits = response.data.totalHits;
-
-    const { hits } = response.data;
-
-    if (hits.length === 0) {
-      Notify.failure(
-        'Sorry, there are no images matching your search query. Please try again.'
-      );
-    } else {
-      Notify.success(`Hooray! We found ${totalHits} images.`);
-      renderGallery(hits, totalHits);
-    }
-    searchInputEl.value = '';
-  } catch (err) {
-    Notify.failure(err);
-  }
-}
-
-searchFormEl.addEventListener('submit', handleSubmit);
-
-async function loadMore() {
-  options.params.page += 1;
-  try {
-    const response = await axios.get(BASE_URL, options);
-    const hits = response.data.hits;
-    renderGallery(hits, totalHits);
-  } catch (err) {
-    Notify.failure(err);
+function isValidQuery(queryToSearch) {
+  if (queryToSearch.trim() === '') {
+    return false;
+  } else {
+    return true;
   }
 }
 
-function handleScroll() {
-  const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
-
-  if (scrollTop + clientHeight >= scrollHeight) {
-    loadMore();
+function isLoaderVisible(loader, isVisible = false) {
+  if (isVisible) {
+    loader.classList.remove('hidden');
+  } else {
+    loader.classList.add('hidden');
   }
 }
-
-window.addEventListener('scroll', handleScroll);
