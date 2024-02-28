@@ -22,7 +22,7 @@ ul {
 }
 
 .search-form-input {
-  width: 371px;
+  width: 272px;
   padding: 8px 16px;
   font-size: 16px;
   line-height: 1.5em;
@@ -44,6 +44,7 @@ ul {
 }
 
 .search-form-button {
+  width: 91px;
   border-radius: 8px;
   padding: 8px 16px;
   background-color: #4e75ff;
@@ -52,7 +53,7 @@ ul {
   font-size: 16px;
   line-height: 150%;
   letter-spacing: 0.04em;
-  color: #fff;
+  color: #ffffff;
 }
 
 .loader {
