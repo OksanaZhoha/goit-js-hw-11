@@ -1,26 +1,12 @@
-import{S as b,a as p,n}from"./assets/vendor-0f54b3be.js";(function(){const t=document.createElement("link").relList;if(t&&t.supports&&t.supports("modulepreload"))return;for(const e of document.querySelectorAll('link[rel="modulepreload"]'))c(e);new MutationObserver(e=>{for(const r of e)if(r.type==="childList")for(const i of r.addedNodes)i.tagName==="LINK"&&i.rel==="modulepreload"&&c(i)}).observe(document,{childList:!0,subtree:!0});function s(e){const r={};return e.integrity&&(r.integrity=e.integrity),e.referrerPolicy&&(r.referrerPolicy=e.referrerPolicy),e.crossOrigin==="use-credentials"?r.credentials="include":e.crossOrigin==="anonymous"?r.credentials="omit":r.credentials="same-origin",r}function c(e){if(e.ep)return;e.ep=!0;const r=s(e);fetch(e.href,r)}})();const d="https://pixabay.com/api/",v="42494915-f1925227b1d4f602df08c38a4",a={params:{key:v,q:"",image_type:"photo",orientation:"horizontal",safesearch:!0,page:1,per_page:40}},m=document.querySelector(".gallery"),u=document.querySelector('input[name="searchQuery"'),E=document.getElementById("search-form"),L=new b(".lightbox",{captionsData:"alt",captionDelay:250});let l=0,f=!1;function y(o){const t=o.map(({webformatURL:s,largeImageURL:c,tags:e,likes:r,views:i,comments:h,downloads:g})=>`
-              <a href="${c}" class="lightbox">
-                  <div class="photo-card">
-                      <img src="${s}" alt="${e}" loading="lazy" />
-                      <div class="info">
-                          <p class="info-item">
-                              <b>Likes</b>
-                              ${r}
-                          </p>
-                          <p class="info-item">
-                              <b>Views</b>
-                              ${i}
-                          </p>
-                          <p class="info-item">
-                              <b>Comments</b>
-                              ${h}
-                          </p>
-                          <p class="info-item">
-                              <b>Downloads</b>
-                              ${g}
-                          </p>
-                      </div>
-                  </div>
-              </a>
-              `).join("");m.insertAdjacentHTML("beforeend",t),a.params.page*a.params.per_page>=l&&(f||(n.Notify.info("We're sorry, but you've reached the end of search results."),f=!0)),L.refresh()}async function N(o){if(o.preventDefault(),a.params.q=u.value.trim(),a.params.q!==""){a.params.page=1,m.innerHTML="",f=!1;try{const t=await p.get(d,a);l=t.data.totalHits;const{hits:s}=t.data;console.log(s),s.length===0?n.Notify.failure("Sorry, there are no images matching your search query. Please try again."):(n.Notify.success(`Hooray! We found ${l} images.`),y(s)),u.value=""}catch(t){n.Notify.failure(t)}}}E.addEventListener("submit",N);async function S(){a.params.page+=1;try{const t=(await p.get(d,a)).data.hits;y(t)}catch(o){n.Notify.failure(o)}}function w(){const{scrollTop:o,scrollHeight:t,clientHeight:s}=document.documentElement;o+s>=t&&S()}window.addEventListener("scroll",w);
+var d=Object.defineProperty;var p=(s,e,t)=>e in s?d(s,e,{enumerable:!0,configurable:!0,writable:!0,value:t}):s[e]=t;var l=(s,e,t)=>(p(s,typeof e!="symbol"?e+"":e,t),t);import{i as m,S as f}from"./assets/vendor-7659544d.js";(function(){const e=document.createElement("link").relList;if(e&&e.supports&&e.supports("modulepreload"))return;for(const r of document.querySelectorAll('link[rel="modulepreload"]'))i(r);new MutationObserver(r=>{for(const a of r)if(a.type==="childList")for(const n of a.addedNodes)n.tagName==="LINK"&&n.rel==="modulepreload"&&i(n)}).observe(document,{childList:!0,subtree:!0});function t(r){const a={};return r.integrity&&(a.integrity=r.integrity),r.referrerPolicy&&(a.referrerPolicy=r.referrerPolicy),r.crossOrigin==="use-credentials"?a.credentials="include":r.crossOrigin==="anonymous"?a.credentials="omit":a.credentials="same-origin",a}function i(r){if(r.ep)return;r.ep=!0;const a=t(r);fetch(r.href,a)}})();class y{constructor(e){l(this,"BASE_URL","https://pixabay.com/api/");this.apiKey=e}getImageList(e){const t=new URLSearchParams({key:this.apiKey,q:e,image_type:"photo",orientation:"horizontal",safesearch:"true"});return fetch(`${this.BASE_URL}?${t}`).then(i=>{if(!i.ok)throw new Error(i.status);return i.json()}).catch(i=>{console.log(i)})}}function h(s){return s.length<=0?(m.error({message:"Sorry, there are no images matching your search query. Please try again!",progressBar:!1,transitionIn:"fadeIn",position:"topRight"}),"no images found"):s.map(t=>`<li class="gallery-item">
+            <a class="gallery-link" href="${t.largeImageURL}">
+              <img src="${t.webformatURL}" alt="${t.tags}" width="360" height="200">
+            </a>
+            <ul class="gallery-item-desc">
+              <li class="gallery-item-desc-item"><span class="gallery-item-desc-cap">Likes</span><span>${t.likes}</span></li>
+              <li class="gallery-item-desc-item"><span class="gallery-item-desc-cap">Views</span><span>${t.views}</span></li>
+              <li class="gallery-item-desc-item"><span class="gallery-item-desc-cap">Comments</span><span>${t.comments}</span></li>
+              <li class="gallery-item-desc-item"><span class="gallery-item-desc-cap">Downloads</span><span>${t.downloads}</span></li>
+            </ul>
+          </li>`).join("")}function g(s,e){e.innerHTML=`${s}`}const o=document.querySelector(".gallery-list"),L=document.querySelector(".search-form-input"),S=document.querySelector(".search-form"),c=document.querySelector(".loader"),b="42494915-f1925227b1d4f602df08c38a4",w=new y(b),I=new f(".gallery-list a",{captionDelay:250,captionsData:"alt"});S.addEventListener("submit",s=>{s.preventDefault(),o.innerHTML="";const e=L.value;$(e)?(u(c,!0),w.getImageList(e).then(t=>h(t.hits)).then(t=>g(t,o)).then(()=>{u(c,!1),I.refresh()})):m.error({message:"Search field is empty",progressBar:!1,transitionIn:"fadeIn",position:"topRight"})});function $(s){return s.trim()!==""}function u(s,e=!1){e?s.classList.remove("hidden"):s.classList.add("hidden")}
 //# sourceMappingURL=commonHelpers.js.map

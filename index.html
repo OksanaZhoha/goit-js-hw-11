@@ -20,33 +20,22 @@
     />
     
     <script type="module" crossorigin src="/goit-js-hw-11/commonHelpers.js"></script>
-    <link rel="modulepreload" crossorigin href="/goit-js-hw-11/assets/vendor-0f54b3be.js">
-    <link rel="stylesheet" href="/goit-js-hw-11/assets/vendor-ef539242.css">
-    <link rel="stylesheet" href="/goit-js-hw-11/assets/index-212aa934.css">
+    <link rel="modulepreload" crossorigin href="/goit-js-hw-11/assets/vendor-7659544d.js">
+    <link rel="stylesheet" href="/goit-js-hw-11/assets/vendor-a51daae5.css">
+    <link rel="stylesheet" href="/goit-js-hw-11/assets/index-e17be105.css">
   </head>
   <body>
-    <header class="header">
-      <form class="search-form" id="search-form">
-        <input
-          class="search-form-input"
-          type="text"
-          name="searchQuery"
-          autocomplete="off"
-          placeholder="Search images..."
-        />
-        <button type="submit">Search</button>
-      </form>
-    </header>
-
-    <main class="main-content">
-      <section class="section">
-        <div class="container">
-          <div class="gallery">
-            <!-- Image cards -->
-          </div>
-        </div>
-      </section>
-    </main>
+    <form class="search-form">
+      <input
+        class="search-form-input"
+        type="text"
+        name="query"
+        placeholder="Search images..."
+      />
+      <button class="search-form-button" type="submit">Search</button>
+    </form>
+    <div class="loader hidden"></div>
+    <ul class="gallery-list"></ul>
     
   </body>
 </html>
